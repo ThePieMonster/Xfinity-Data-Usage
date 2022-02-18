@@ -1,9 +1,6 @@
 from setuptools import setup, find_packages
 from xfinity_usage.version import VERSION, PROJECT_URL
 
-with open('README.rst', encoding="utf-8") as file:
-    long_description = file.read()
-
 requires = [
     'selenium'
 ]
@@ -34,7 +31,7 @@ setup(
     url=PROJECT_URL,
     description='Python/selenium script to get Xfinity bandwidth usage from '
                 'Xfinity MyAccount website.',
-    long_description=long_description,
+    long_description='long_description',
     install_requires=requires,
     keywords="comcast xfinity usage data meter bandwidth",
     classifiers=classifiers,

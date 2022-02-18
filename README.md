@@ -116,7 +116,7 @@ Password = supersecretpassword
 4. Build the container
 ```
 cd <local folder>
-docker build --build-args TZ="America/New_York" -t xfinity .
+docker build -t xfinity-data-usage .
 ```
 
 Note, the TZ should be set to whatever is appropriate for your environment.  Usually, a local TZ environment variable is set so this could simply be passed on as in TZ=${TZ} on the build line.
@@ -125,8 +125,8 @@ Note, the TZ should be set to whatever is appropriate for your environment.  Usu
 5. Run the container, pointing to the config file, and an output folder (optional,recommended)
 ```bash
 docker run \
-   --name="xfinity" \
+   --name="xfinity-data-usage" \
    -v /some/path/config.ini:/app/config.ini \
    -v /some/path/data:/app/data \
-   xfinity
+   xfinity-data-usage
 ```

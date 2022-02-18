@@ -12,7 +12,7 @@ import socket
 from operator import itemgetter
 from copy import deepcopy
 
-from .version import VERSION, PROJECT_URL
+from xfinity_usage.version import VERSION, PROJECT_URL
 
 try:
     from selenium import webdriver

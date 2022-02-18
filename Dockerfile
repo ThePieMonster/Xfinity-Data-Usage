@@ -1,7 +1,5 @@
-FROM ubuntu:focal
-
-ARG TZ
-ENV TZ=$TZ
+### SETUP ###
+FROM ubuntu:focal AS base
 
 # install openssh-server
 RUN apt-get update
@@ -62,26 +60,23 @@ RUN pip3 install paho-mqtt
 RUN pip3 install influxdb
 #RUN pip3 install influxdb-client
 
-# Current copy needed deltas for firefox-headless
-# Also changes to control attempt count at runtime
 # Install source code
-ADD xfinity-usage xfinity-usage
-WORKDIR /xfinity-usage
-RUN pip3 install -e .
+ADD xfinity-usage /xfinity-usage
+RUN pip3 install -e /xfinity-usage
+ADD run.py /app/run.py
+#COPY config.ini /app # Config is copied via Docker variable
 
 ENV LANG C.UTF-8
 ENV LC_ALL C.UTF-8
 ENV PYTHONUNBUFFERED=1
 
-WORKDIR /app
-COPY run.py /app
-COPY config.ini /app
+### START NEW IMAGE: DEBUG ###
+FROM base AS debug
+RUN echo 'START NEW IMAGE: DEBUG'
+RUN pip3 install debugpy
+CMD python3 -m debugpy --listen 0.0.0.0:5678 --wait-for-client /app/run.py
 
-#ENV APP_HOME /app/data
-#WORKDIR /$APP_HOME
-#COPY . $APP_HOME/
-
-# Set entrypoint
-# Only the last CMD command will run in a Dockerfile
-#CMD tail -f /dev/null
-CMD ["python3", "-u", "/app/run.py"]
+### START NEW IMAGE: PROD ###
+#FROM base AS prod
+#RUN echo 'START NEW IMAGE: PROD'
+#CMD python3 /app/run.py

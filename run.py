@@ -3,17 +3,18 @@ import os
 import sys
 import shutil
 import argparse
-from influxdb import InfluxDBClient
-from influxdb.exceptions import InfluxDBClientError, InfluxDBServerError
 import time
 import logging
 import json
+import time
+from datetime import datetime, timedelta
+from influxdb import InfluxDBClient
+from influxdb.exceptions import InfluxDBClientError, InfluxDBServerError
 from xfinity_usage.xfinity_usage import XfinityUsage
 
 import paho.mqtt.client as mqtt
 import paho.mqtt.publish as mqttpublish
-from datetime import datetime, timedelta
-import time
+
 
 class configManager():
 
@@ -263,10 +264,10 @@ def clear_logs():
             logging.info("- Error: %s : %s" % (dir_path, e.strerror))
         except Exception:
             logging.info("- Error during log removal")
-        try:
+        """         try:
             os.makedirs(dir_path) 
         except Exception:
-            logging.info("- No directory created")
+            logging.info("- No directory created") """
         
 
 def main():
